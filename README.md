@@ -1,4 +1,4 @@
-# Claude Skills
+# Roger Skills
 
 个人 Claude Code / Agent Skills 集合。每个子目录是一个独立 skill，含 `SKILL.md` 与配套工具/资源。
 
