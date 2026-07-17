@@ -1,0 +1,1626 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>{{TITLE}}</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;700;900&family=Noto+Sans+SC:wght@300;400;500;700&family=IBM+Plex+Mono:wght@400;600&display=swap" rel="stylesheet">
+<script src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js"></script>
+<style>
+/* ══════════════════════════════════════════
+   THEME VARIABLES  (8 themes)
+   body class: theme-red-gray | theme-blue | theme-dark |
+               theme-white | theme-orange | theme-corporate |
+               theme-forest | theme-aurora
+══════════════════════════════════════════ */
+
+body.theme-red-gray {
+  --ink:       #1a1a1a; --ink-2: rgba(26,26,26,0.58);
+  --paper:     #ffffff; --paper-2: #f2f2f2; --paper-3: #e8e8e8;
+  --accent:    #cc0000; --accent-2: rgba(204,0,0,0.1); --highlight: #ff2442;
+  --serif:     'Noto Serif SC', Georgia, serif;
+  --shadow-sm: 0 1px 4px rgba(0,0,0,0.07); --shadow-md: 0 4px 16px rgba(0,0,0,0.1);
+}
+body.theme-blue {
+  --ink:       #1f3a6e; --ink-2: rgba(31,58,110,0.58);
+  --paper:     #ffffff; --paper-2: #f0f4f8; --paper-3: #dce8f4;
+  --accent:    #2e86c1; --accent-2: rgba(46,134,193,0.1); --highlight: #f39c12;
+  --serif:     'Noto Serif SC', Georgia, serif;
+  --shadow-sm: 0 1px 4px rgba(31,58,110,0.08); --shadow-md: 0 4px 16px rgba(31,58,110,0.12);
+}
+/* ── modern-dark: 全深色主题
+     核心设计：--ink 保持深色（用于深色背景块），slide 背景改为深色，
+     所有"浅色主题下深色文字"的元素单独用 override 改为浅色
+── */
+body.theme-dark {
+  --ink:       #0f0f23; --ink-2: rgba(221,226,240,0.5);
+  --paper:     #0f0f23; --paper-2: #181830; --paper-3: #222245;
+  --accent:    #7c3aed; --accent-2: rgba(124,58,237,0.2); --highlight: #00d9ff;
+  --serif:     'Noto Serif SC', Georgia, serif;
+  --shadow-sm: 0 1px 4px rgba(0,0,0,0.4); --shadow-md: 0 4px 16px rgba(0,0,0,0.5);
+}
+/* dark: 幻灯片标题改用 highlight 色更醒目 */
+body.theme-dark .slide-title { color: var(--highlight); }
+body.theme-dark .slide-title-line { background: var(--highlight); }
+/* dark: 深色背景块用更深的 ink，与 paper 形成层次 */
+body.theme-dark .slide-section,
+body.theme-dark .slide-quote { background: #07071a !important; }
+body.theme-dark .slide-cover .cover-left { background: #07071a; }
+body.theme-dark .slide-closing .closing-right { background: #07071a; }
+/* dark: 所有用 var(--ink) 作为文字色的元素 → 改为浅色 */
+body.theme-dark .bullet-text,
+body.theme-dark .numbered-title,
+body.theme-dark .numbered-desc,
+body.theme-dark .tl-title,
+body.theme-dark .tl-desc,
+body.theme-dark .grid-card-body,
+body.theme-dark .process-body,
+body.theme-dark .col-item,
+body.theme-dark .stat-label,
+body.theme-dark .stat-desc,
+body.theme-dark .ba-item,
+body.theme-dark .matrix-row:nth-child(2) .matrix-q-label,
+body.theme-dark .matrix-row:nth-child(2) .matrix-q-desc,
+body.theme-dark .pyramid-desc,
+body.theme-dark .cycle-label,
+body.theme-dark .cycle-desc,
+body.theme-dark .hier-grandchild { color: #dde2f0; }
+body.theme-dark .numbered-title { color: var(--highlight); }
+/* dark: 卡片背景 */
+body.theme-dark .bullet-card,
+body.theme-dark .numbered-content,
+body.theme-dark .tl-content,
+body.theme-dark .process-body,
+body.theme-dark .ba-content { background: var(--paper-2); }
+/* dark: col-item 双栏修正 */
+body.theme-dark .col-item { background: var(--paper-2); border-left-color: var(--accent); }
+body.theme-dark .col-right .col-item { border-left-color: var(--highlight); }
+/* dark: matrix 浅色象限 */
+body.theme-dark .matrix-row:nth-child(2) .matrix-q { background: var(--paper-2); }
+body.theme-dark .matrix-row:nth-child(2) .matrix-q:nth-child(2) { background: var(--paper-3); }
+
+body.theme-white {
+  --ink:       #181818; --ink-2: rgba(24,24,24,0.52);
+  --paper:     #ffffff; --paper-2: #f5f5f5; --paper-3: #ebebeb;
+  --accent:    #ff4d4d; --accent-2: rgba(255,77,77,0.1); --highlight: #ff4d4d;
+  --serif:     'Noto Serif SC', Georgia, serif;
+  --shadow-sm: 0 1px 3px rgba(0,0,0,0.06); --shadow-md: 0 4px 14px rgba(0,0,0,0.08);
+}
+body.theme-orange {
+  --ink:       #1c1208; --ink-2: rgba(28,18,8,0.58);
+  --paper:     #fffbf7; --paper-2: #fdf0e8; --paper-3: #f5e0cc;
+  --accent:    #ff6b35; --accent-2: rgba(255,107,53,0.1); --highlight: #ffd93d;
+  --serif:     'Noto Serif SC', Georgia, serif;
+  --shadow-sm: 0 1px 4px rgba(28,18,8,0.07); --shadow-md: 0 4px 16px rgba(28,18,8,0.1);
+}
+/* ── corporate-clean: 极简企业风，深海军蓝 + 金色 ── */
+body.theme-corporate {
+  --ink:       #0d1b4b; --ink-2: rgba(13,27,75,0.58);
+  --paper:     #ffffff; --paper-2: #f4f6fb; --paper-3: #e8edf8;
+  --accent:    #0d1b4b; --accent-2: rgba(13,27,75,0.08); --highlight: #c9a84c;
+  --serif:     'Noto Serif SC', Georgia, serif;
+  --shadow-sm: 0 1px 4px rgba(13,27,75,0.08); --shadow-md: 0 4px 16px rgba(13,27,75,0.12);
+}
+body.theme-corporate .slide::before { background: var(--highlight); }
+body.theme-corporate .slide-title-line,
+body.theme-corporate .cover-line { background: var(--highlight); }
+/* ── forest-ink: 深森林绿，自然感（借鉴 guizang Forest Ink）── */
+body.theme-forest {
+  --ink:       #1a2e1a; --ink-2: rgba(26,46,26,0.62);
+  --paper:     #f5f0e8; --paper-2: #ede8dc; --paper-3: #e0d9ca;
+  --accent:    #2d5a27; --accent-2: rgba(45,90,39,0.1); --highlight: #8b6914;
+  --serif:     'Noto Serif SC', Georgia, serif;
+  --shadow-sm: 0 1px 4px rgba(26,46,26,0.08); --shadow-md: 0 4px 16px rgba(26,46,26,0.12);
+}
+/* ── aurora: 渐变光晕，现代科技感 ── */
+body.theme-aurora {
+  --ink:       #1e1240; --ink-2: rgba(30,18,64,0.62);
+  --paper:     #fafafe; --paper-2: #f0eeff; --paper-3: #e4dfff;
+  --accent:    #6d28d9; --accent-2: rgba(109,40,217,0.1); --highlight: #06b6d4;
+  --serif:     'Noto Serif SC', Georgia, serif;
+  --shadow-sm: 0 1px 4px rgba(109,40,217,0.1); --shadow-md: 0 4px 16px rgba(109,40,217,0.15);
+}
+body.theme-aurora .slide::before {
+  background: linear-gradient(90deg, #6d28d9, #06b6d4, #10b981);
+  height: 3px;
+}
+body.theme-aurora .slide-title-line {
+  background: linear-gradient(90deg, #6d28d9, #06b6d4);
+  width: 5vw;
+}
+
+/* ══════════════════════════════════════════
+   BASE SYSTEM
+══════════════════════════════════════════ */
+
+*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+body {
+  font-family: 'Noto Sans SC', 'Microsoft YaHei', sans-serif;
+  background: #111;
+  overflow: hidden;
+  height: 100vh;
+  width: 100vw;
+}
+
+.deck {
+  display: flex;
+  width: 100vw;
+  height: 100vh;
+  transition: transform 0.45s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+.slide {
+  min-width: 100vw;
+  height: 100vh;
+  background: var(--paper);
+  display: flex;
+  flex-direction: column;
+  padding: 5vh 6vw;
+  position: relative;
+  overflow: hidden;
+}
+
+/* ── 全局排版精细化 ── */
+body { letter-spacing: -0.01em; }
+
+/* ── 渐变文字工具类（借鉴 guizang 强调标题手法）── */
+.gradient-text {
+  background: linear-gradient(135deg, var(--accent) 30%, var(--highlight));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+/* ── 阴影工具类 ── */
+.shadow-sm { box-shadow: var(--shadow-sm, 0 1px 4px rgba(0,0,0,0.07)); }
+.shadow-md { box-shadow: var(--shadow-md, 0 4px 16px rgba(0,0,0,0.1)); }
+
+/* Slide Header (used by most content slides) */
+.slide-header {
+  flex-shrink: 0;
+  margin-bottom: 2.5vh;
+}
+.slide-title {
+  font-size: clamp(18px, 2.6vw, 40px);
+  font-weight: 700;
+  color: var(--accent);
+  line-height: 1.25;
+  margin-bottom: 0.6vh;
+  font-family: var(--serif, 'Noto Sans SC', sans-serif);
+  letter-spacing: -0.025em;
+}
+.slide-title-line {
+  width: 4vw;
+  height: 3px;
+  background: var(--accent);
+  border-radius: 2px;
+}
+
+/* Slide body fills remaining space */
+.slide-body {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+}
+
+/* Top & bottom accent bars */
+.slide::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 4px;
+  background: var(--accent);
+}
+.slide::after {
+  content: '';
+  position: absolute;
+  bottom: 0; left: 0; right: 0;
+  height: 4px;
+  background: var(--ink);
+  opacity: 0.08;
+}
+
+/* ══════════════════════════════════════════
+   COVER SLIDE
+══════════════════════════════════════════ */
+
+.slide-cover {
+  padding: 0;
+  display: grid;
+  grid-template-columns: 42% 58%;
+}
+.slide-cover::before, .slide-cover::after { display: none; }
+
+.cover-left {
+  background: var(--ink);
+  padding: 6vh 5vw;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  position: relative;
+  overflow: hidden;
+}
+.cover-left::after {
+  content: '';
+  position: absolute;
+  left: 0; bottom: 0; top: 0;
+  width: 5px;
+  background: var(--accent);
+}
+.cover-tag {
+  font-size: clamp(10px, 0.95vw, 14px);
+  color: var(--accent);
+  font-family: 'IBM Plex Mono', monospace;
+  letter-spacing: 0.08em;
+  margin-bottom: 3vh;
+  background: rgba(255,255,255,0.08);
+  display: inline-block;
+  padding: 4px 12px;
+  border-radius: 20px;
+  width: fit-content;
+}
+.cover-title {
+  font-family: 'Noto Serif SC', serif;
+  font-size: clamp(28px, 4vw, 60px);
+  font-weight: 900;
+  color: #fff;
+  line-height: 1.2;
+  margin-bottom: 3vh;
+}
+.cover-line {
+  width: 3vw;
+  height: 3px;
+  background: var(--accent);
+  margin-bottom: 2vh;
+  border-radius: 2px;
+}
+.cover-subtitle {
+  font-size: clamp(13px, 1.3vw, 20px);
+  color: rgba(255,255,255,0.7);
+  line-height: 1.6;
+}
+
+.cover-right {
+  background: var(--paper);
+  position: relative;
+  overflow: hidden;
+}
+.cover-right::before {
+  content: '';
+  position: absolute;
+  width: 70%;
+  aspect-ratio: 1;
+  border-radius: 50%;
+  background: var(--paper-2);
+  top: -25%;
+  right: -15%;
+}
+.cover-right::after {
+  content: '';
+  position: absolute;
+  width: 35%;
+  aspect-ratio: 1;
+  border-radius: 50%;
+  background: var(--accent);
+  bottom: 8%;
+  right: 8%;
+  opacity: 0.7;
+}
+.cover-count {
+  position: absolute;
+  bottom: 8vh;
+  left: 6vw;
+  z-index: 1;
+}
+.cover-count-num {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: clamp(40px, 6vw, 90px);
+  font-weight: 900;
+  color: var(--accent);
+  opacity: 0.2;
+  line-height: 1;
+}
+.cover-count-label {
+  font-size: clamp(11px, 1vw, 15px);
+  color: var(--ink-2);
+}
+
+/* ══════════════════════════════════════════
+   SECTION DIVIDER
+══════════════════════════════════════════ */
+
+.slide-section {
+  background: var(--ink) !important;
+  justify-content: center;
+  padding: 5vh 8vw;
+}
+.slide-section::before, .slide-section::after { display: none; }
+
+.section-number {
+  position: absolute;
+  right: 4vw;
+  top: -2vh;
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: clamp(80px, 22vw, 320px);
+  font-weight: 900;
+  color: var(--accent);
+  opacity: 0.12;
+  line-height: 1;
+  user-select: none;
+}
+.section-tag {
+  font-size: clamp(11px, 1vw, 15px);
+  color: var(--accent);
+  font-family: 'IBM Plex Mono', monospace;
+  letter-spacing: 0.1em;
+  margin-bottom: 2.5vh;
+  position: relative;
+  z-index: 1;
+}
+.section-line {
+  width: 5vw;
+  height: 4px;
+  background: var(--highlight);
+  margin-bottom: 2.5vh;
+  border-radius: 2px;
+  position: relative;
+  z-index: 1;
+}
+.section-title {
+  font-family: 'Noto Serif SC', serif;
+  font-size: clamp(28px, 4.5vw, 68px);
+  font-weight: 900;
+  color: #fff;
+  line-height: 1.2;
+  position: relative;
+  z-index: 1;
+  max-width: 70%;
+}
+.section-subtitle {
+  font-size: clamp(13px, 1.3vw, 20px);
+  color: rgba(255,255,255,0.55);
+  margin-top: 2.5vh;
+  position: relative;
+  z-index: 1;
+  max-width: 60%;
+  line-height: 1.6;
+}
+
+/* ══════════════════════════════════════════
+   BULLETS — Card style
+══════════════════════════════════════════ */
+
+.bullet-cards {
+  display: flex;
+  flex-direction: column;
+  gap: 1.2vh;
+  flex: 1;
+}
+.bullet-card {
+  background: var(--paper-2);
+  border-left: 4px solid var(--accent);
+  padding: 1.4vh 1.8vw;
+  display: flex;
+  align-items: center;
+  gap: 1.5vw;
+  flex: 1;
+  box-shadow: var(--shadow-sm, 0 1px 4px rgba(0,0,0,0.06));
+  transition: box-shadow 0.2s;
+  transition: transform 0.15s;
+}
+.bullet-num {
+  width: clamp(24px, 2.2vw, 36px);
+  height: clamp(24px, 2.2vw, 36px);
+  border-radius: 50%;
+  background: var(--accent);
+  color: #fff;
+  font-size: clamp(10px, 0.95vw, 15px);
+  font-weight: 700;
+  font-family: 'IBM Plex Mono', monospace;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+.bullet-text {
+  font-size: clamp(13px, 1.2vw, 19px);
+  color: var(--ink);
+  line-height: 1.55;
+}
+
+/* ══════════════════════════════════════════
+   PROCESS — Step flow with arrows
+══════════════════════════════════════════ */
+
+.process-flow {
+  display: flex;
+  gap: 0;
+  align-items: stretch;
+  flex: 1;
+}
+.process-step {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  background: var(--paper-2);
+  position: relative;
+}
+.process-header {
+  background: var(--ink);
+  padding: 1.8vh 1.5vw;
+  display: flex;
+  align-items: center;
+  gap: 1vw;
+}
+.process-num {
+  width: clamp(24px, 2.4vw, 38px);
+  height: clamp(24px, 2.4vw, 38px);
+  border-radius: 50%;
+  background: var(--accent);
+  color: #fff;
+  font-size: clamp(11px, 1.05vw, 16px);
+  font-weight: 700;
+  font-family: 'IBM Plex Mono', monospace;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+.process-label {
+  font-size: clamp(12px, 1.1vw, 17px);
+  font-weight: 700;
+  color: #fff;
+  line-height: 1.3;
+}
+.process-body {
+  padding: 2vh 1.5vw;
+  font-size: clamp(11px, 1.05vw, 16px);
+  color: var(--ink);
+  line-height: 1.6;
+  flex: 1;
+  opacity: 0.85;
+}
+.process-arrow {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0 0.6vw;
+  color: var(--accent);
+  font-size: clamp(14px, 1.4vw, 22px);
+  flex-shrink: 0;
+}
+
+/* ══════════════════════════════════════════
+   GRID — Card grid 2×2 or 3×2
+══════════════════════════════════════════ */
+
+.grid-cards {
+  display: grid;
+  gap: 1.5vh 1.5vw;
+  flex: 1;
+  align-content: stretch;
+}
+.grid-cards.cols-2 { grid-template-columns: repeat(2, 1fr); }
+.grid-cards.cols-3 { grid-template-columns: repeat(3, 1fr); }
+
+.grid-card {
+  background: var(--paper-2);
+  display: flex;
+  flex-direction: column;
+  padding: 0;
+  overflow: hidden;
+  border-top: 3px solid var(--accent);
+}
+.grid-card-top {
+  background: var(--ink);
+  padding: 1.4vh 1.4vw;
+  display: flex;
+  align-items: center;
+  gap: 0.8vw;
+}
+.grid-card-num {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: clamp(13px, 1.3vw, 20px);
+  font-weight: 700;
+  color: var(--accent);
+}
+.grid-card-icon { font-size: clamp(16px, 1.5vw, 24px); display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+
+/* ── Lucide 图标系统 ── */
+i[data-lucide] { display: inline-flex; align-items: center; justify-content: center; flex-shrink: 0; }
+.grid-card-icon i[data-lucide] { width: clamp(16px,1.5vw,24px); height: clamp(16px,1.5vw,24px); color: var(--accent); }
+.stat-card i[data-lucide] { width: clamp(20px,2vw,32px); height: clamp(20px,2vw,32px); color: var(--accent); margin-bottom: .8vh; }
+.bullet-icon i[data-lucide] { width: clamp(14px,1.3vw,20px); height: clamp(14px,1.3vw,20px); color: var(--accent); }
+.grid-card-label {
+  font-size: clamp(12px, 1.1vw, 17px);
+  font-weight: 700;
+  color: #fff;
+}
+.grid-card-body {
+  padding: 1.4vh 1.4vw;
+  font-size: clamp(11px, 1.0vw, 15px);
+  color: var(--ink);
+  line-height: 1.6;
+  opacity: 0.82;
+  flex: 1;
+}
+
+/* ══════════════════════════════════════════
+   NUMBERED LIST
+══════════════════════════════════════════ */
+
+.numbered-list {
+  display: flex;
+  flex-direction: column;
+  gap: 1vh;
+  flex: 1;
+}
+.numbered-item {
+  display: flex;
+  align-items: stretch;
+  flex: 1;
+  overflow: hidden;
+}
+.numbered-num {
+  background: var(--ink);
+  color: #fff;
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: clamp(18px, 2vw, 30px);
+  font-weight: 700;
+  min-width: clamp(50px, 5.5vw, 80px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+.numbered-divider {
+  width: 4px;
+  background: var(--accent);
+  flex-shrink: 0;
+}
+.numbered-content {
+  background: var(--paper-2);
+  padding: 1.2vh 1.8vw;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  flex: 1;
+}
+.numbered-title {
+  font-size: clamp(13px, 1.2vw, 18px);
+  font-weight: 700;
+  color: var(--accent);
+  margin-bottom: 0.5vh;
+}
+.numbered-desc {
+  font-size: clamp(11px, 1.05vw, 16px);
+  color: var(--ink);
+  line-height: 1.55;
+  opacity: 0.82;
+}
+
+/* ══════════════════════════════════════════
+   TWO COLUMN
+══════════════════════════════════════════ */
+
+.two-col {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 2vw;
+  flex: 1;
+}
+.col-block { display: flex; flex-direction: column; gap: 1vh; }
+.col-header {
+  padding: 1.2vh 1.5vw;
+  font-size: clamp(12px, 1.1vw, 17px);
+  font-weight: 700;
+  color: #fff;
+}
+.col-left .col-header { background: var(--accent); }
+.col-right .col-header { background: var(--ink); }
+.col-item {
+  background: var(--paper-2);
+  padding: 1.1vh 1.5vw 1.1vh 1vw;
+  border-left: 4px solid var(--accent);
+  font-size: clamp(12px, 1.1vw, 17px);
+  color: var(--ink);
+  display: flex;
+  align-items: center;
+  gap: 1vw;
+  flex: 1;
+}
+.col-right .col-item { border-left-color: var(--ink); }
+.col-dot {
+  width: clamp(18px, 1.7vw, 26px);
+  height: clamp(18px, 1.7vw, 26px);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: clamp(9px, 0.85vw, 13px);
+  font-weight: 700;
+  color: #fff;
+  flex-shrink: 0;
+}
+.col-left .col-dot { background: var(--accent); }
+.col-right .col-dot { background: var(--ink); }
+
+/* ══════════════════════════════════════════
+   MATRIX — 2×2 Quadrant
+══════════════════════════════════════════ */
+
+.matrix-wrap {
+  flex: 1;
+  display: grid;
+  grid-template-rows: 1fr 1fr;
+  gap: 0;
+  position: relative;
+}
+.matrix-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 3px;
+}
+.matrix-q {
+  padding: 2.5vh 2.5vw;
+  display: flex;
+  flex-direction: column;
+  gap: 1vh;
+}
+.matrix-q:nth-child(1) { background: var(--accent); }
+.matrix-q:nth-child(2) { background: var(--ink); }
+.matrix-row:nth-child(2) .matrix-q:nth-child(1) { background: var(--paper-3); }
+.matrix-row:nth-child(2) .matrix-q:nth-child(2) { background: var(--paper-2); }
+.matrix-q-label {
+  font-size: clamp(13px, 1.2vw, 19px);
+  font-weight: 700;
+}
+.matrix-q:nth-child(1) .matrix-q-label,
+.matrix-q:nth-child(2) .matrix-q-label { color: #fff; }
+.matrix-row:nth-child(2) .matrix-q-label { color: var(--ink); }
+.matrix-q-desc {
+  font-size: clamp(11px, 1.0vw, 15px);
+  line-height: 1.55;
+  opacity: 0.82;
+}
+.matrix-q:nth-child(1) .matrix-q-desc,
+.matrix-q:nth-child(2) .matrix-q-desc { color: rgba(255,255,255,0.85); }
+.matrix-row:nth-child(2) .matrix-q-desc { color: var(--ink); }
+/* Axis labels */
+.matrix-x-label {
+  position: absolute;
+  bottom: -3.5vh;
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: clamp(10px, 0.9vw, 14px);
+  color: var(--ink-2);
+  font-family: 'IBM Plex Mono', monospace;
+}
+.matrix-y-label {
+  position: absolute;
+  left: -5vw;
+  top: 50%;
+  transform: translateY(-50%) rotate(-90deg);
+  font-size: clamp(10px, 0.9vw, 14px);
+  color: var(--ink-2);
+  font-family: 'IBM Plex Mono', monospace;
+  white-space: nowrap;
+}
+
+/* ══════════════════════════════════════════
+   PYRAMID
+══════════════════════════════════════════ */
+
+.pyramid-wrap {
+  flex: 1;
+  display: flex;
+  flex-direction: column-reverse;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 3px;
+  padding-top: 1vh;
+}
+.pyramid-layer {
+  display: flex;
+  align-items: center;
+  padding: 1.4vh 2.5vw;
+  gap: 2vw;
+  transition: opacity 0.2s;
+}
+.pyramid-layer:nth-child(1) { width: 100%; background: var(--ink); }
+.pyramid-layer:nth-child(2) { width: 82%; background: var(--accent); }
+.pyramid-layer:nth-child(3) { width: 64%; background: var(--ink); filter: brightness(1.4); }
+.pyramid-layer:nth-child(4) { width: 46%; background: var(--accent); filter: brightness(1.15); }
+.pyramid-layer:nth-child(5) { width: 30%; background: var(--ink); filter: brightness(1.7); }
+.pyramid-layer:nth-child(6) { width: 17%; background: var(--accent); filter: brightness(0.85); }
+.pyramid-layer:nth-child(6) { width: 17%; background: var(--accent); filter: brightness(0.85); }
+.pyramid-label {
+  font-weight: 700;
+  color: #fff;
+  font-size: clamp(12px, 1.15vw, 18px);
+  min-width: 8vw;
+  flex-shrink: 0;
+}
+.pyramid-desc {
+  font-size: clamp(10px, 0.98vw, 15px);
+  color: rgba(255,255,255,0.8);
+  line-height: 1.4;
+}
+
+/* ══════════════════════════════════════════
+   CYCLE — Circular flow
+══════════════════════════════════════════ */
+
+.cycle-wrap {
+  flex: 1;
+  position: relative;
+}
+.cycle-node {
+  position: absolute;
+  transform: translate(-50%, -50%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.8vh;
+  text-align: center;
+  width: 10vw;
+}
+.cycle-circle {
+  width: clamp(44px, 5vw, 76px);
+  height: clamp(44px, 5vw, 76px);
+  border-radius: 50%;
+  background: var(--ink);
+  border: 3px solid var(--accent);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: clamp(14px, 1.4vw, 22px);
+  font-weight: 700;
+  color: var(--accent);
+}
+.cycle-label {
+  font-size: clamp(11px, 1.05vw, 16px);
+  font-weight: 700;
+  color: var(--ink);
+  line-height: 1.3;
+}
+.cycle-desc {
+  font-size: clamp(9px, 0.88vw, 13px);
+  color: var(--ink-2);
+  line-height: 1.4;
+}
+.cycle-center-text {
+  position: absolute;
+  top: 50%; left: 50%;
+  transform: translate(-50%, -50%);
+  width: clamp(60px, 7vw, 100px);
+  height: clamp(60px, 7vw, 100px);
+  border-radius: 50%;
+  background: var(--paper-2);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: clamp(10px, 0.95vw, 14px);
+  font-weight: 700;
+  color: var(--accent);
+  text-align: center;
+  border: 2px solid var(--accent);
+  padding: 5px;
+}
+
+/* ══════════════════════════════════════════
+   HIERARCHY
+══════════════════════════════════════════ */
+
+.hierarchy-wrap {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0;
+  padding-top: 1vh;
+  overflow: hidden;
+}
+.hier-row {
+  display: flex;
+  justify-content: center;
+  gap: 1.2vw;
+  position: relative;
+  width: 100%;
+}
+.hier-connector-v {
+  width: 2px;
+  background: var(--accent);
+  opacity: 0.3;
+  margin: 0 auto;
+  flex-shrink: 0;
+  align-self: center;
+}
+.hier-connector-h {
+  height: 2px;
+  background: var(--accent);
+  opacity: 0.3;
+  flex: 1;
+  align-self: center;
+}
+.hier-node {
+  padding: 0.9vh 1.5vw;
+  font-size: clamp(11px, 1.1vw, 17px);
+  font-weight: 700;
+  text-align: center;
+  white-space: nowrap;
+  border-radius: 3px;
+}
+.hier-root { background: var(--ink); color: #fff; }
+.hier-child { background: var(--accent); color: #fff; font-size: clamp(10px, 1vw, 15px); }
+.hier-grandchild {
+  background: var(--paper-2);
+  color: var(--ink);
+  border-top: 3px solid var(--accent);
+  font-weight: 500;
+  font-size: clamp(9px, 0.9vw, 14px);
+}
+
+/* ══════════════════════════════════════════
+   QUOTE
+══════════════════════════════════════════ */
+
+.slide-quote {
+  background: var(--ink) !important;
+  justify-content: center;
+  align-items: center;
+}
+.slide-quote::before { background: var(--accent); }
+.slide-quote::after { display: none; }
+
+.quote-mark {
+  position: absolute;
+  top: 0; left: 3vw;
+  font-family: Georgia, 'Noto Serif SC', serif;
+  font-size: clamp(80px, 18vw, 260px);
+  color: var(--accent);
+  opacity: 0.18;
+  line-height: 0.9;
+  user-select: none;
+}
+.quote-text {
+  font-family: 'Noto Serif SC', serif;
+  font-size: clamp(18px, 2.5vw, 38px);
+  color: #fff;
+  font-style: italic;
+  text-align: center;
+  line-height: 1.65;
+  max-width: 80%;
+  position: relative;
+  z-index: 1;
+}
+.quote-rule {
+  width: 5vw;
+  height: 3px;
+  background: var(--accent);
+  margin: 3vh auto;
+  border-radius: 2px;
+}
+.quote-author {
+  font-size: clamp(13px, 1.2vw, 18px);
+  color: rgba(255,255,255,0.75);
+  font-weight: 700;
+  text-align: center;
+}
+.quote-role {
+  font-size: clamp(11px, 1vw, 15px);
+  color: rgba(255,255,255,0.45);
+  text-align: center;
+  margin-top: 0.6vh;
+  font-family: 'IBM Plex Mono', monospace;
+}
+
+/* ══════════════════════════════════════════
+   CLOSING
+══════════════════════════════════════════ */
+
+.slide-closing {
+  padding: 0;
+  display: grid;
+  grid-template-columns: 42% 58%;
+}
+.slide-closing::before { background: var(--highlight); }
+.slide-closing::after { display: none; }
+
+.closing-left {
+  background: var(--paper);
+  padding: 6vh 5vw;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  position: relative;
+  overflow: hidden;
+}
+.closing-left::before {
+  content: '';
+  position: absolute;
+  width: 70%;
+  aspect-ratio: 1;
+  border-radius: 50%;
+  background: var(--paper-2);
+  bottom: -25%;
+  left: -20%;
+}
+.closing-title {
+  font-family: 'Noto Serif SC', serif;
+  font-size: clamp(26px, 3.2vw, 48px);
+  font-weight: 900;
+  color: var(--accent);
+  line-height: 1.2;
+  position: relative;
+  z-index: 1;
+  margin-bottom: 2vh;
+}
+.closing-line {
+  width: 3vw;
+  height: 3px;
+  background: var(--accent);
+  margin-bottom: 2vh;
+  border-radius: 2px;
+  position: relative;
+  z-index: 1;
+}
+.closing-subtitle {
+  font-size: clamp(12px, 1.15vw, 17px);
+  color: var(--ink-2);
+  line-height: 1.65;
+  position: relative;
+  z-index: 1;
+}
+.closing-right {
+  background: var(--ink);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 5vh 5vw;
+}
+.closing-cta {
+  font-size: clamp(16px, 1.8vw, 28px);
+  color: #fff;
+  text-align: center;
+  line-height: 1.6;
+  font-weight: 500;
+}
+
+/* ══════════════════════════════════════════
+   NAVIGATION
+══════════════════════════════════════════ */
+
+.nav {
+  position: fixed;
+  bottom: 2.5vh;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  align-items: center;
+  gap: 0.8vw;
+  z-index: 100;
+  background: rgba(0,0,0,0.4);
+  padding: 6px 16px;
+  border-radius: 20px;
+  backdrop-filter: blur(8px);
+}
+.nav-btn {
+  background: none;
+  border: none;
+  color: rgba(255,255,255,0.6);
+  cursor: pointer;
+  font-size: 18px;
+  padding: 2px 6px;
+  transition: color 0.2s;
+}
+.nav-btn:hover { color: #fff; }
+.nav-counter {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 12px;
+  color: rgba(255,255,255,0.55);
+  min-width: 5ch;
+  text-align: center;
+}
+.nav-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: rgba(255,255,255,0.3);
+  cursor: pointer;
+  transition: background 0.2s, transform 0.2s;
+}
+.nav-dot.active {
+  background: #fff;
+  transform: scale(1.3);
+}
+
+/* ══════════════════════════════════════════
+   PRINT / EXPORT
+══════════════════════════════════════════ */
+
+.export-btn {
+  position: fixed;
+  top: 2vh;
+  right: 2vw;
+  z-index: 100;
+  background: rgba(0,0,0,0.5);
+  color: rgba(255,255,255,0.7);
+  border: none;
+  padding: 6px 14px;
+  border-radius: 6px;
+  font-size: 12px;
+  cursor: pointer;
+  backdrop-filter: blur(8px);
+  font-family: 'IBM Plex Mono', monospace;
+  transition: color 0.2s;
+}
+.export-btn:hover { color: #fff; }
+
+/* ══════════════════════════════════════════
+   TIMELINE（时间轴）
+   用法：.timeline-wrap > .timeline-item × N
+══════════════════════════════════════════ */
+.timeline-wrap {
+  flex: 1;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: 0.5vh 1vw 0.5vh 0;
+}
+.timeline-wrap::before {
+  content: '';
+  position: absolute;
+  left: 9.2vw;
+  top: 1vh;
+  bottom: 1vh;
+  width: 2px;
+  background: linear-gradient(to bottom, var(--accent), rgba(0,0,0,0.05));
+}
+.timeline-item {
+  display: grid;
+  grid-template-columns: 8.5vw 18px 1fr;
+  align-items: flex-start;
+  gap: 0 1.2vw;
+  position: relative;
+}
+.tl-date {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: clamp(10px, 0.95vw, 14px);
+  color: var(--accent);
+  font-weight: 700;
+  text-align: right;
+  padding-top: 0.3vh;
+  line-height: 1.3;
+}
+.tl-dot {
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  background: var(--accent);
+  border: 3px solid var(--paper);
+  box-shadow: 0 0 0 2px var(--accent);
+  margin-top: 0.25vh;
+  position: relative;
+  z-index: 1;
+  flex-shrink: 0;
+}
+.tl-content { padding-bottom: 0.5vh; }
+.tl-title {
+  font-size: clamp(13px, 1.2vw, 19px);
+  font-weight: 700;
+  color: var(--ink);
+  margin-bottom: 0.3vh;
+  line-height: 1.3;
+  font-family: var(--serif, sans-serif);
+}
+.tl-desc {
+  font-size: clamp(11px, 1.0vw, 15px);
+  color: var(--ink-2);
+  line-height: 1.55;
+}
+.tl-tag {
+  display: inline-block;
+  font-size: clamp(9px, 0.82vw, 12px);
+  background: var(--accent-2);
+  color: var(--accent);
+  padding: 2px 8px;
+  border-radius: 12px;
+  margin-top: 0.4vh;
+  font-family: 'IBM Plex Mono', monospace;
+}
+
+/* ══════════════════════════════════════════
+   STATS / BIG NUMBERS（大数字数据卡）
+   用法：.stats-grid.cols-N > .stat-card × N
+══════════════════════════════════════════ */
+.stats-grid {
+  display: grid;
+  gap: 2vw;
+  flex: 1;
+  align-content: center;
+}
+.stats-grid.cols-2 { grid-template-columns: repeat(2,1fr); }
+.stats-grid.cols-3 { grid-template-columns: repeat(3,1fr); }
+.stats-grid.cols-4 { grid-template-columns: repeat(4,1fr); }
+
+.stat-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  padding: 3.5vh 2vw 2.5vh;
+  background: var(--paper-2);
+  border-top: 4px solid var(--accent);
+  position: relative;
+  overflow: hidden;
+  box-shadow: var(--shadow-md, 0 4px 16px rgba(0,0,0,0.08));
+}
+/* 装饰性背景大数字（借鉴 html-ppt-skill stat 组件）*/
+.stat-card::before {
+  content: attr(data-bg);
+  position: absolute;
+  right: -5%;
+  bottom: -15%;
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 9vw;
+  font-weight: 900;
+  color: var(--accent);
+  opacity: 0.04;
+  line-height: 1;
+  user-select: none;
+}
+.stat-num {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: clamp(48px, 6.5vw, 100px);
+  font-weight: 900;
+  color: var(--accent);
+  line-height: 1;
+  margin-bottom: 1.2vh;
+  letter-spacing: -0.03em;
+}
+.stat-label {
+  font-size: clamp(14px, 1.3vw, 20px);
+  font-weight: 700;
+  color: var(--ink);
+  margin-bottom: 0.5vh;
+  font-family: var(--serif, sans-serif);
+}
+.stat-desc {
+  font-size: clamp(11px, 1vw, 15px);
+  color: var(--ink-2);
+  line-height: 1.5;
+}
+
+/* ══════════════════════════════════════════
+   BEFORE / AFTER（对比幻灯片）
+   借鉴 html-ppt-skill before-after 布局
+══════════════════════════════════════════ */
+.before-after {
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  gap: 1.5vw;
+  flex: 1;
+  align-items: stretch;
+}
+.ba-panel {
+  display: flex;
+  flex-direction: column;
+  border-radius: 6px;
+  overflow: hidden;
+  box-shadow: var(--shadow-md, 0 4px 16px rgba(0,0,0,0.08));
+}
+.ba-label {
+  padding: 1.2vh 2vw;
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: clamp(11px, 1vw, 16px);
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  color: #fff;
+}
+.ba-before .ba-label { background: var(--ink); }
+.ba-after  .ba-label { background: var(--accent); }
+.ba-content {
+  flex: 1;
+  background: var(--paper-2);
+  display: flex;
+  flex-direction: column;
+  gap: 0.8vh;
+  padding: 1.5vh 2vw;
+}
+.ba-item {
+  font-size: clamp(12px, 1.1vw, 17px);
+  color: var(--ink);
+  padding: 0.9vh 1.2vw;
+  background: var(--paper);
+  border-left: 3px solid;
+  line-height: 1.55;
+  box-shadow: var(--shadow-sm, 0 1px 4px rgba(0,0,0,0.05));
+}
+.ba-before .ba-item { border-left-color: var(--ink); }
+.ba-after  .ba-item { border-left-color: var(--accent); }
+.ba-divider {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  gap: 0.8vh;
+}
+.ba-arrow {
+  font-size: clamp(24px, 3vw, 48px);
+  color: var(--accent);
+  font-weight: 900;
+  line-height: 1;
+}
+.ba-divider-label {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: clamp(9px, 0.8vw, 12px);
+  color: var(--ink-2);
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+@media print {
+  .nav, .export-btn, .presenter-btn { display: none; }
+  body { overflow: visible; background: white; }
+  .deck { flex-wrap: wrap; transform: none !important; }
+  .slide { min-width: 100%; height: 100vh; page-break-after: always; }
+}
+
+/* ══════════════════════════════════════════
+   ANIMATION SYSTEM
+   用法：给元素加 data-anim="fade-up" 和可选的 data-delay="200"
+   当幻灯片切入时自动触发
+══════════════════════════════════════════ */
+
+/* 初始隐藏状态 */
+[data-anim], .stagger-list > *, .typewriter, [data-counter] {
+  opacity: 0;
+  will-change: transform, opacity, filter;
+}
+/* 触发后恢复 */
+[data-anim].anim-in {
+  opacity: 1;
+  transform: none !important;
+  filter: none !important;
+  transition: opacity 0.55s ease,
+              transform 0.55s cubic-bezier(0.34, 1.3, 0.64, 1),
+              filter 0.5s ease;
+}
+
+/* 方向 */
+[data-anim="fade-up"]     { transform: translateY(38px); }
+[data-anim="fade-down"]   { transform: translateY(-38px); }
+[data-anim="fade-left"]   { transform: translateX(38px); }
+[data-anim="fade-right"]  { transform: translateX(-38px); }
+[data-anim="zoom-pop"]    { transform: scale(0.75); }
+[data-anim="zoom-out"]    { transform: scale(1.18); }
+[data-anim="blur-in"]     { filter: blur(18px); transform: none; }
+[data-anim="rise-in"]     { transform: translateY(90px); }
+[data-anim="drop-in"]     { transform: translateY(-90px); }
+[data-anim="slide-left"]  { transform: translateX(110px); }
+[data-anim="slide-right"] { transform: translateX(-110px); }
+[data-anim="flip-x"]      { transform: rotateX(80deg); transform-origin: top; }
+
+/* Stagger list — 子元素逐个出现 */
+.stagger-list > * {
+  transform: translateY(22px);
+  transition: opacity 0.4s ease, transform 0.4s ease;
+}
+.stagger-list.anim-in > * { opacity: 1; transform: none; }
+.stagger-list.anim-in > *:nth-child(1) { transition-delay: 0.00s; }
+.stagger-list.anim-in > *:nth-child(2) { transition-delay: 0.11s; }
+.stagger-list.anim-in > *:nth-child(3) { transition-delay: 0.22s; }
+.stagger-list.anim-in > *:nth-child(4) { transition-delay: 0.33s; }
+.stagger-list.anim-in > *:nth-child(5) { transition-delay: 0.44s; }
+.stagger-list.anim-in > *:nth-child(6) { transition-delay: 0.55s; }
+
+/* Typewriter — 字符逐个显示 */
+/* typewriter：仅适用于单行文字（cover-title 等）
+   多行文字请改用 data-anim="rise-in" */
+.typewriter {
+  overflow: hidden;
+  white-space: nowrap;   /* 强制单行，多行标题不要用此 class */
+  width: 0;
+  display: block;
+  transition: width 1.6s steps(40, end);
+}
+.typewriter.anim-in { opacity: 1; width: 100%; }
+
+/* JS 禁用降级：counter-up 直接显示（而非永远是 0）*/
+@media (scripting: none) {
+  [data-counter] { opacity: 1 !important; }
+}
+
+/* Counter-up — 数字滚动（由 JS 驱动） */
+[data-counter].anim-in { opacity: 1; }
+
+/* Neon glow */
+[data-anim="neon-glow"].anim-in {
+  animation: neonPulse 2s ease-in-out infinite alternate;
+}
+@keyframes neonPulse {
+  from { text-shadow: 0 0 6px var(--accent), 0 0 20px var(--accent); }
+  to   { text-shadow: 0 0 12px var(--accent), 0 0 40px var(--accent), 0 0 80px var(--accent); }
+}
+
+/* Glitch in */
+[data-anim="glitch-in"].anim-in {
+  animation: glitchIn 0.45s steps(2, end) forwards;
+}
+@keyframes glitchIn {
+  0%   { clip-path:inset(42% 0 58% 0); transform:translate(-5px,0); opacity:0.3; }
+  25%  { clip-path:inset(88% 0 2% 0);  transform:translate(5px,0);  opacity:1;   }
+  50%  { clip-path:inset(22% 0 60% 0); transform:translate(-3px,0); opacity:1;   }
+  75%  { clip-path:inset(55% 0 8% 0);  transform:translate(3px,0);  opacity:1;   }
+  100% { clip-path:none; transform:none; opacity:1; }
+}
+
+/* Speaker notes — 演示时隐藏 */
+.notes { display: none; }
+
+/* ══════════════════════════════════════════
+   PRESENTER MODE BUTTON
+══════════════════════════════════════════ */
+.presenter-btn {
+  position: fixed;
+  top: 2vh;
+  left: 2vw;
+  z-index: 100;
+  background: rgba(0,0,0,0.5);
+  color: rgba(255,255,255,0.7);
+  border: none;
+  padding: 6px 14px;
+  border-radius: 6px;
+  font-size: 12px;
+  cursor: pointer;
+  backdrop-filter: blur(8px);
+  font-family: 'IBM Plex Mono', monospace;
+  transition: color 0.2s;
+}
+.presenter-btn:hover { color: #fff; }
+</style>
+</head>
+<body class="theme-red-gray"><!-- 修改 theme class 切换主题 -->
+
+<div class="deck" id="deck">
+
+  <!-- ═══ AI 在此插入幻灯片 ═══ -->
+  <!-- 示例：封面 -->
+  <!--
+  <div class="slide slide-cover">
+    <div class="cover-left">
+      <div class="cover-tag">系列标签</div>
+      <div class="cover-title">演示标题</div>
+      <div class="cover-line"></div>
+      <div class="cover-subtitle">副标题说明文字</div>
+    </div>
+    <div class="cover-right">
+      <div class="cover-count">
+        <div class="cover-count-num">07</div>
+        <div class="cover-count-label">个核心观点</div>
+      </div>
+    </div>
+  </div>
+  -->
+
+</div>
+
+<!-- Navigation -->
+<div class="nav" id="nav">
+  <button class="nav-btn" onclick="go(-1)">◀</button>
+  <div id="dots"></div>
+  <span class="nav-counter" id="counter">1 / 1</span>
+  <button class="nav-btn" onclick="go(1)">▶</button>
+</div>
+
+<button class="export-btn" onclick="window.print()">⬇ 导出PDF</button>
+<button class="presenter-btn" onclick="openPresenter()" title="演讲者模式 (S)">🎤 演讲者</button>
+
+<script>
+// ── 基础变量 ────────────────────────────────────────────
+const deck    = document.getElementById('deck');
+const slides  = deck.querySelectorAll('.slide');
+const dotsEl  = document.getElementById('dots');
+const counter = document.getElementById('counter');
+let cur = 0;
+
+// 构建导航点
+slides.forEach((_, i) => {
+  const d = document.createElement('div');
+  d.className = 'nav-dot' + (i === 0 ? ' active' : '');
+  d.onclick = () => goTo(i);
+  dotsEl.appendChild(d);
+});
+
+// ── 动画系统 ─────────────────────────────────────────────
+function triggerAnims(slideEl) {
+  // data-anim 元素（按 data-delay 或索引顺序触发）
+  slideEl.querySelectorAll('[data-anim]').forEach((el, i) => {
+    const delay = parseInt(el.dataset.delay ?? (i * 120));
+    setTimeout(() => el.classList.add('anim-in'), delay);
+  });
+
+  // stagger-list（子项依次出现）
+  slideEl.querySelectorAll('.stagger-list').forEach(el => {
+    const delay = parseInt(el.dataset.delay ?? 80);
+    setTimeout(() => el.classList.add('anim-in'), delay);
+  });
+
+  // typewriter
+  slideEl.querySelectorAll('.typewriter').forEach(el => {
+    setTimeout(() => el.classList.add('anim-in'), parseInt(el.dataset.delay ?? 0));
+  });
+
+  // counter-up（数字滚动）
+  slideEl.querySelectorAll('[data-counter]').forEach(el => {
+    const target   = parseInt(el.dataset.counter);
+    const duration = parseInt(el.dataset.duration ?? 1500);
+    const suffix   = el.dataset.suffix ?? '';
+    const delay    = parseInt(el.dataset.delay ?? 300);
+    el.classList.add('anim-in');
+    setTimeout(() => {
+      const t0 = performance.now();
+      const tick = now => {
+        const p = Math.min((now - t0) / duration, 1);
+        // easeOutCubic
+        const e = 1 - Math.pow(1 - p, 3);
+        el.textContent = Math.round(e * target) + suffix;
+        if (p < 1) requestAnimationFrame(tick);
+      };
+      requestAnimationFrame(tick);
+    }, delay);
+  });
+}
+
+function resetAnims(slideEl) {
+  slideEl.querySelectorAll(
+    '[data-anim], .stagger-list, .typewriter, [data-counter]'
+  ).forEach(el => el.classList.remove('anim-in'));
+}
+
+// ── 导航核心 ─────────────────────────────────────────────
+function update() {
+  deck.style.transform = `translateX(-${cur * 100}vw)`;
+  counter.textContent  = `${cur + 1} / ${slides.length}`;
+  document.querySelectorAll('.nav-dot').forEach((d, i) =>
+    d.classList.toggle('active', i === cur)
+  );
+  triggerAnims(slides[cur]);
+  syncPresenter();
+}
+
+function goTo(idx) {
+  const prev = cur;
+  cur = Math.max(0, Math.min(slides.length - 1, idx));
+  if (cur !== prev) resetAnims(slides[prev]);
+  update();
+}
+function go(delta) { goTo(cur + delta); }
+
+// ── 键盘快捷键 ────────────────────────────────────────────
+document.addEventListener('keydown', e => {
+  if (['ArrowRight','ArrowDown',' '].includes(e.key)) { e.preventDefault(); go(1); }
+  if (['ArrowLeft','ArrowUp'].includes(e.key))         { e.preventDefault(); go(-1); }
+  if (e.key === 's' || e.key === 'S') openPresenter();
+  if (e.key === 'f' || e.key === 'F') toggleFullscreen();
+  if (e.key === 'Escape' && document.fullscreenElement) document.exitFullscreen();
+});
+
+// 触控滑动
+let tx = 0;
+deck.addEventListener('touchstart', e => { tx = e.touches[0].clientX; }, {passive:true});
+deck.addEventListener('touchend',   e => {
+  const dx = e.changedTouches[0].clientX - tx;
+  if (Math.abs(dx) > 50) go(dx < 0 ? 1 : -1);
+});
+
+function toggleFullscreen() {
+  if (!document.fullscreenElement) document.documentElement.requestFullscreen();
+  else document.exitFullscreen();
+}
+
+// ── 演讲者模式 ────────────────────────────────────────────
+const ch = new BroadcastChannel('ppt-presenter');
+let presenterWin = null;
+
+function openPresenter() {
+  if (presenterWin && !presenterWin.closed) { presenterWin.focus(); syncPresenter(); return; }
+  presenterWin = window.open('', 'presenter',
+    'width=1300,height=820,toolbar=no,menubar=no,scrollbars=yes,resizable=yes');
+
+  const presenterHTML = `<!DOCTYPE html><html lang="zh-CN"><head>
+<meta charset="UTF-8"><title>演讲者模式</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;700&family=IBM+Plex+Mono:wght@400;600&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:#161616;color:#fff;font-family:'Noto Sans SC','Microsoft YaHei',sans-serif;height:100vh;overflow:hidden;user-select:none}
+.grid{display:grid;grid-template-areas:"cur next""notes timer";grid-template-columns:3fr 2fr;grid-template-rows:58vh 1fr;gap:10px;padding:10px;height:100vh}
+.card{background:#222;border-radius:10px;padding:14px;overflow:auto;display:flex;flex-direction:column;gap:8px}
+.label{font-size:10px;color:#666;text-transform:uppercase;letter-spacing:.12em;flex-shrink:0}
+#cur{grid-area:cur}
+#next-card{grid-area:next}
+#notes-card{grid-area:notes}
+#timer-card{grid-area:timer;align-items:center;justify-content:center}
+.preview-box{flex:1;background:#333;border-radius:6px;display:flex;align-items:center;justify-content:center;font-size:13px;color:#888;padding:10px;text-align:center;line-height:1.5}
+.notes-body{font-size:15px;line-height:1.75;color:#ccc;flex:1}
+.notes-body strong{color:#fff}
+#timer{font-family:'IBM Plex Mono',monospace;font-size:56px;color:#fff;letter-spacing:.04em;line-height:1}
+#slide-num{font-family:'IBM Plex Mono',monospace;font-size:20px;color:#555;margin-bottom:12px}
+.btns{display:flex;gap:8px;margin-top:14px}
+.btn{background:#333;border:none;color:#ddd;padding:7px 18px;border-radius:6px;cursor:pointer;font-size:13px;font-family:inherit;transition:background .15s}
+.btn:hover{background:#444}
+.btn.active{background:#cc0000;color:#fff}
+</style></head><body>
+<div class="grid">
+  <div class="card" id="cur">
+    <div class="label">▶ 当前页</div>
+    <div class="preview-box" id="cur-box">—</div>
+  </div>
+  <div class="card" id="next-card">
+    <div class="label">→ 下一页</div>
+    <div class="preview-box" id="next-box">—</div>
+  </div>
+  <div class="card" id="notes-card">
+    <div class="label">📝 讲稿</div>
+    <div class="notes-body" id="notes-body">（此页无讲稿）</div>
+  </div>
+  <div class="card" id="timer-card">
+    <div id="slide-num">1 / —</div>
+    <div id="timer">00:00</div>
+    <div class="btns">
+      <button class="btn" id="start-btn" onclick="toggleTimer()">▶ 开始</button>
+      <button class="btn" onclick="resetTimer()">↺ 重置</button>
+    </div>
+  </div>
+</div>
+<script>
+const ch2=new BroadcastChannel('ppt-presenter');
+let running=false,elapsed=0,iv=null;
+ch2.onmessage=e=>{
+  const d=e.data;
+  document.getElementById('slide-num').textContent=d.cur+' / '+d.total;
+  document.getElementById('cur-box').innerHTML=d.curTitle?'<strong style="font-size:18px;color:#fff">'+d.curTitle+'</strong><br><span style="font-size:12px;color:#666">第'+d.cur+'页</span>':'第'+d.cur+'页';
+  document.getElementById('next-box').innerHTML=d.nextTitle?'<strong style="font-size:16px;color:#ccc">'+d.nextTitle+'</strong><br><span style="font-size:12px;color:#555">第'+(d.cur+1)+'页</span>':'（最后一页）';
+  document.getElementById('notes-body').innerHTML=d.notes||'（此页无讲稿）';
+};
+function toggleTimer(){
+  if(running){clearInterval(iv);running=false;document.getElementById('start-btn').textContent='▶ 开始';document.getElementById('start-btn').classList.remove('active');}
+  else{iv=setInterval(()=>{elapsed++;tick();},1000);running=true;document.getElementById('start-btn').textContent='⏸ 暂停';document.getElementById('start-btn').classList.add('active');}
+}
+function resetTimer(){clearInterval(iv);running=false;elapsed=0;tick();document.getElementById('start-btn').textContent='▶ 开始';document.getElementById('start-btn').classList.remove('active');}
+function tick(){const m=String(Math.floor(elapsed/60)).padStart(2,'0');const s=String(elapsed%60).padStart(2,'0');document.getElementById('timer').textContent=m+':'+s;}
+<\/script></body></html>`;
+
+  presenterWin.document.open();
+  presenterWin.document.write(presenterHTML);
+  presenterWin.document.close();
+  setTimeout(syncPresenter, 400);
+}
+
+function syncPresenter() {
+  if (!presenterWin || presenterWin.closed) return;
+  const cs = slides[cur];
+  const ns = slides[Math.min(cur + 1, slides.length - 1)];
+  const notesEl = cs.querySelector('.notes');
+  ch.postMessage({
+    cur:       cur + 1,
+    total:     slides.length,
+    curTitle:  cs.querySelector('.slide-title,.cover-title,.section-title')?.textContent?.trim() ?? '',
+    nextTitle: (cur + 1 < slides.length)
+               ? (ns.querySelector('.slide-title,.cover-title,.section-title')?.textContent?.trim() ?? '')
+               : '',
+    notes: notesEl ? notesEl.innerHTML : '',
+  });
+}
+
+// ── 初始化 ─────────────────────────────────────────────
+update();
+if (typeof lucide !== 'undefined') lucide.createIcons();
+</script>
+</body>
+</html>

@@ -1,0 +1,17 @@
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+
+# 渲染/预览中间产物
+_preview/
+_preview_html/
+*.pdf
+
+# 系统
+.DS_Store
+Thumbs.db
+
+# 备份
+*.original.md
+*.bak
