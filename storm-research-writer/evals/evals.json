@@ -1,0 +1,59 @@
+{
+  "skill_name": "storm-research-writer",
+  "evals": [
+    {
+      "id": 1,
+      "prompt": "我想快速做一个关于'主动降噪耳机主流技术原理'的研究大纲，不用写正文，给我一个多级大纲就行。",
+      "expected_output": "一个分层级的研究大纲（不含正文）。大纲经过两阶段构建：先凭背景知识起草一个通用框架，再用研究笔记里的具体发现精修、补充该主题特有的小节。覆盖基础事实视角加上若干技术/应用/局限性等细分视角，不包含未注明来源的具体数据声明。",
+      "expectations": [
+        "Output stops after the outline stage and does not produce full article prose, respecting the 'prefer the minimum workflow that satisfies the request' operating rule.",
+        "The outline reflects (or the agent narrates) a two-stage process: an initial draft outline from background knowledge followed by a refined version informed by research notes, per workflow.md Phase 7.",
+        "At least one basic-facts/overview section plus several distinct topic-specific or perspective-driven sections (not just generic Intro/Body/Conclusion placeholders).",
+        "No fabricated specific statistics or named sources are presented as fact without attribution; unsourced claims are flagged as hypotheses or omitted."
+      ]
+    },
+    {
+      "id": 2,
+      "prompt": "帮我写一篇关于'2023年固态电池产业化进展'的维基百科风格长文，要带引用，大概1500字左右，中文。",
+      "expected_output": "完整的维基百科风格中文长文，先有大纲后有正文，分节撰写并附带来源标注；导语/摘要段是在正文各节写完之后才综合产出的，准确反映正文内容；正文避免'目前/截至现在'等无具体日期的时效性表述；交付前完成一次验证，检查未支撑声明、事实间的不当关联，以及'引用存在但改写失真'这类与'缺失引用'不同的问题。",
+      "expectations": [
+        "An outline (multi-level headings) is produced or validated before the full draft, per the 'still produce or validate an outline before drafting' operating rule.",
+        "Citations or source references are attached to specific factual claims rather than only appearing generically; claims without support are marked as hypotheses or omitted rather than invented.",
+        "The lead/summary paragraph is synthesized after the body sections and does not introduce claims absent from the drafted sections, per workflow.md Phase 8.",
+        "The draft avoids undated relative time phrases such as '目前' or '截至现在' without an accompanying specific date.",
+        "A verification pass checks for unsupported claims, over-association between unrelated facts, and citation-paraphrase accuracy (not just citation presence) before final delivery, per workflow.md Phase 9."
+      ]
+    },
+    {
+      "id": 3,
+      "prompt": "STORM 这个研究方法到底是干什么的？跟普通的 RAG 有什么区别？",
+      "expected_output": "对 STORM 方法的概念性解释：核心假设（多视角带来更好的问题、迭代式研究）、典型流程概览、与基础 RAG 的关键区别（问题驱动检索 vs 主题直接检索）。不需要执行完整的研究工作流，也不需要生成大纲或文章。",
+      "expectations": [
+        "The agent draws on references/storm-method.md content (diverse perspectives -> better questions, iterative research, outline before draft) rather than running the full research-and-draft workflow.",
+        "The explanation explicitly contrasts STORM's question-driven, perspective-guided retrieval against basic RAG's direct topic search, per the 'Difference From Basic RAG' section.",
+        "No unnecessary outline or draft article is generated, consistent with 'prefer the minimum workflow that satisfies the request'."
+      ]
+    },
+    {
+      "id": 4,
+      "prompt": "请研究阿斯巴甜对成年人健康的影响，写一份面向中国大陆普通消费者的中文研究简报。保留支持与质疑其安全性的主要观点，优先使用 WHO、IARC、JECFA、中国监管部门和系统综述，并注明证据日期。",
+      "expected_output": "一份研究简报（research brief），明确中国大陆这一适用市场并按主题分组来源支撑笔记，标注每条笔记是事实/解读/推断/争议/缺口；各立场按证据权威性、质量与共识程度呈现，不暗示虚假平衡或虚假共识；不把无关研究结果强行关联到阿斯巴甜；因为是健康类高风险话题，措辞谨慎、不超出证据范围给建议。",
+      "expectations": [
+        "Conflicting viewpoints on the additive's health effects are both represented rather than collapsed into a single conclusion, per the 'preserve minority or conflicting viewpoints' operating rule.",
+        "Notes or claims are classified by type (fact / interpretation / inference / dispute / gap) as specified in source-policy.md's claim discipline section.",
+        "The output avoids over-association — it does not connect unrelated studies or facts to the additive without explicit source support, per the over-association guardrail.",
+        "Because this is a health-related high-stakes topic, the output reflects appropriate uncertainty and does not give advice exceeding the evidence, per source-policy.md's high-stakes topics section."
+      ]
+    },
+    {
+      "id": 5,
+      "prompt": "帮我把下面这段话润色一下，读起来更通顺：'我们的产品用了很先进的技术，能够帮助客户解决很多问题，效果非常好。'",
+      "expected_output": "直接返回润色后的文字，不触发 STORM 研究工作流。这是一个纯改写/润色任务，没有事实研究、来源收集或大纲需求，应当按'满足请求的最小工作流'原则跳过视角发现、提问、检索和大纲步骤。",
+      "expectations": [
+        "The agent simply rewrites/polishes the given text and does not launch the STORM research pipeline (no perspectives, no research questions, no source gathering, no outline), per the 'prefer the minimum workflow that satisfies the request' operating rule.",
+        "No web_search.py call or other source retrieval is performed, since the task provides its own text and requires no external facts.",
+        "No fabricated claims or citations are added to the polished text; the rewrite preserves the original meaning."
+      ]
+    }
+  ]
+}
