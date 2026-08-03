@@ -25,8 +25,6 @@
 - **HTML/CSS 简历**：可输出单文件网页简历，支持头像预留、侧栏、打印导出 PDF
 - **真实性边界**：不编造经历、学历、证书或项目，保守估算需提示用户核实
 
-配套文章：[FDE 火了以后，我越来越觉得：我们需要一套更好的简历写法](./articles/fde-resume-skill-wechat.md)
-
 ## 使用
 
 把某个 skill 目录放进 `~/.claude/skills/`（或 `~/.agents/skills/`）即可被 Claude Code 识别。
