@@ -32,6 +32,14 @@ Basic RAG often searches the topic directly, retrieves a set of documents, and a
 
 This makes STORM especially useful for topics where the best article structure is not obvious at the beginning.
 
+## Original STORM And Workflow Extensions
+
+The NAACL 2024 STORM paper's core contribution is the pre-writing pipeline: discover perspectives from related articles, simulate multi-turn question asking with source-grounded answers, create a background-only outline, refine it with the gathered conversations, and then write sections from relevant references. Its reported evaluation emphasizes outline coverage, article organization, relevance, coverage, and citation verifiability.
+
+Popular four-prompt adaptations often add fixed expert lenses, contradiction mapping, synthesis with action implications, and self-review. These are useful STORM-inspired extensions, not the paper's original four modules. This skill adopts contradiction mapping, research-readiness review, section evidence packets, and a final quality review while keeping that distinction explicit.
+
+Do not treat self-assigned 1-10 confidence as source verification. Prefer categorical evidence states and inspect the underlying source. Treat a requested "hidden connection" as especially risky because the paper's expert evaluation identified over-association of unrelated facts as a failure mode; include it only with direct source support or a transparent reasoning chain labeled as inference.
+
 ## Known Failure Modes
 
 - Source bias transfer: biased or promotional sources can shape the output.

@@ -7,7 +7,7 @@
       "expected_output": "一个分层级的研究大纲（不含正文）。大纲经过两阶段构建：先凭背景知识起草一个通用框架，再用研究笔记里的具体发现精修、补充该主题特有的小节。覆盖基础事实视角加上若干技术/应用/局限性等细分视角，不包含未注明来源的具体数据声明。",
       "expectations": [
         "Output stops after the outline stage and does not produce full article prose, respecting the 'prefer the minimum workflow that satisfies the request' operating rule.",
-        "The outline reflects (or the agent narrates) a two-stage process: an initial draft outline from background knowledge followed by a refined version informed by research notes, per workflow.md Phase 7.",
+        "The outline reflects (or the agent narrates) a two-stage process: an initial draft outline from background knowledge followed by a refined version informed by research notes, per workflow.md Phase 8.",
         "At least one basic-facts/overview section plus several distinct topic-specific or perspective-driven sections (not just generic Intro/Body/Conclusion placeholders).",
         "No fabricated specific statistics or named sources are presented as fact without attribution; unsourced claims are flagged as hypotheses or omitted."
       ]
@@ -19,9 +19,9 @@
       "expectations": [
         "An outline (multi-level headings) is produced or validated before the full draft, per the 'still produce or validate an outline before drafting' operating rule.",
         "Citations or source references are attached to specific factual claims rather than only appearing generically; claims without support are marked as hypotheses or omitted rather than invented.",
-        "The lead/summary paragraph is synthesized after the body sections and does not introduce claims absent from the drafted sections, per workflow.md Phase 8.",
+        "The lead/summary paragraph is synthesized after the body sections and does not introduce claims absent from the drafted sections, per workflow.md Phase 10.",
         "The draft avoids undated relative time phrases such as '目前' or '截至现在' without an accompanying specific date.",
-        "A verification pass checks for unsupported claims, over-association between unrelated facts, and citation-paraphrase accuracy (not just citation presence) before final delivery, per workflow.md Phase 9."
+        "A verification pass checks for unsupported claims, over-association between unrelated facts, and citation-paraphrase accuracy (not just citation presence) before final delivery, per workflow.md Phase 11."
       ]
     },
     {
@@ -65,6 +65,29 @@
         "No substantive outline section is silently merged, renamed, omitted, or replaced by a generic Main Analysis section.",
         "Every leaf section contains prose or an explicit evidence-gap statement.",
         "scripts/report_structure_lint.py exits 0 before delivery; a non-zero result is fixed rather than merely disclosed."
+      ]
+    },
+    {
+      "id": 7,
+      "prompt": "请深度研究企业采用前沿部署工程师（FDE）的能力路径，面向中国企业AI负责人写一份有引用的最终报告。不要只给岗位定义，我需要能力形成机制、阶段分水岭、案例或比较、失败模式和可执行培养建议。",
+      "expected_output": "在检索前明确深度合同；研究过程中保留重要分歧和缺失视角；锁定精修大纲前生成研究就绪判断；为每个叶子章节准备带结论类型、证据、边界和深度声明的章节证据包；正文按章节目的展开机制、证据、案例或比较、反例与行动含义，但不为填模板制造案例或争议；交付前同时通过结构闸口和最终质量闸口。",
+      "expectations": [
+        "The run defines a task-specific depth contract covering intended decisions, expected explanatory treatment, evidence mix, localization, and any length constraint without equating word count with quality.",
+        "A research-readiness decision is recorded before the refined outline is locked; central unsupported sections trigger more research, an explicit gap, or scope revision rather than a source-count shortcut.",
+        "Material contradictions, missing perspectives, and interested-source concentration are assessed and preserved when unresolved rather than averaged into consensus.",
+        "Every leaf section has a section evidence packet mapping purpose, questions, typed claims, exact evidence, uncertainty or boundary, and intended depth before drafting.",
+        "The final quality review checks coverage, explanatory depth, grounding, disagreement preservation, proportionality, source quality, over-association, and decision usefulness in addition to running report_structure_lint.py."
+      ]
+    },
+    {
+      "id": 8,
+      "prompt": "我给你的精修大纲里有一节‘中国企业FDE投入产出回报’，但你检索后只找到海外公司的招聘说明，没有中国企业项目数据。继续按这个大纲写完整深度报告。",
+      "expected_output": "研究就绪闸口不得把海外招聘说明当作中国投入产出证据。系统应将该核心章节判为证据不足，继续检索、缩小主张、将其明确改为证据缺口，或先修改并重新验证精修大纲；不得用扩写、无来源数字或一般性建议掩盖缺口。",
+      "expectations": [
+        "The research-readiness or section-evidence gate blocks the unsupported China-specific ROI claim instead of passing because sources exist on the general topic.",
+        "The agent distinguishes overseas role-definition evidence from China-specific cost-benefit evidence and does not over-associate them.",
+        "The agent either researches further, explicitly narrows the claim to a gap, or revises and revalidates the outline before drafting.",
+        "No fabricated cases, ROI numbers, or padding are introduced to satisfy the requested section."
       ]
     }
   ]

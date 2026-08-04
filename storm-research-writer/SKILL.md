@@ -2,7 +2,7 @@
 name: "storm-research-writer"
 description: "Use when an agent needs to perform STORM-inspired research and writing: multi-perspective topic exploration, question-driven research, source-grounded synthesis, outline generation, Wikipedia-like article drafting, research reports, course frameworks, literature-style briefs, or any task where the user asks to research before writing, use STORM, ask questions from multiple perspectives, build an outline from sources, or produce a grounded long-form draft. Do not use for simple rewriting, proofreading, summarization, translation, or short answers that do not require research, sources, or an outline."
 metadata:
-  version: "1.0.2"
+  version: "1.0.3"
   author: "roger"
 ---
 
@@ -10,26 +10,28 @@ metadata:
 
 ## Overview
 
-Use this skill to turn a topic into a researched outline or grounded long-form draft through a STORM-inspired workflow: discover perspectives, ask better questions, gather source-backed answers, synthesize notes, build an outline, and verify the result.
+Use this skill to turn a topic into a researched outline or grounded long-form draft through a STORM-inspired workflow: discover perspectives, ask better questions, gather source-backed answers, preserve material disagreements, synthesize notes, build an outline, and verify the result.
 
 The skill is tool-agnostic. Use whatever reliable sources and tools are available in the current agent environment: web search, local files, PDFs, user-provided notes, connected drives, databases, or manual source lists.
 
 ## Quick Workflow
 
-1. Frame the task: topic, target audience, output type, depth, language, jurisdiction when relevant, and citation needs. Create the background-only draft outline now if the task needs an outline.
+1. Frame the task: topic, target audience, output type, depth contract, language, jurisdiction when relevant, and citation needs. Create the background-only draft outline now if the task needs an outline.
 2. Discover perspectives: include one basic-facts perspective plus several domain or stakeholder perspectives.
 3. Ask questions: generate perspective-guided questions, then follow up when answers reveal gaps.
 4. Gather evidence: answer each question from sources and separate facts, interpretations, and inferences.
-5. Synthesize notes: merge overlapping findings and preserve source attribution.
-6. Build an outline: refine the existing background-only draft with the synthesized research notes before drafting.
-7. Draft if requested: lock the refined outline as the structure contract, copy its heading tree into the draft, and fill each section from source notes. Synthesize the lead/summary last.
-8. Verify: block delivery until the final draft passes structure conformance plus coverage, grounding, source quality, paraphrase accuracy, time-sensitive phrasing, and over-association checks.
+5. Map disagreements: record contradictions, evidence strength, consensus, and missing perspectives without forcing false balance.
+6. Synthesize notes: merge overlapping findings, preserve source attribution, and do not promote an inferred "hidden connection" without source support or an explicit reasoning chain.
+7. Pass research readiness: before locking the refined outline, confirm that core questions are supported, explicitly inferred from supported premises, disputed, or recorded as gaps; return to research or narrow scope when the evidence is not ready.
+8. Build and prepare the outline: refine the background-only draft; for deep final writing, create a section evidence packet for every planned leaf section before drafting.
+9. Draft if requested: lock the refined outline as the structure contract, copy its heading tree into the draft, and fill each section to its declared depth from the evidence packet. Synthesize the lead/summary last.
+10. Verify: block delivery until the final draft passes structure conformance and the final quality gate for coverage, explanatory depth, grounding, disagreement preservation, organization, source quality, paraphrase accuracy, time-sensitive phrasing, and over-association.
 
 ## Reference Routing
 
 Read only the files needed for the user request:
 
-- `references/storm-method.md`: Read when the user asks what STORM is, asks to compare STORM with RAG, or wants the method explained.
+- `references/storm-method.md`: Read when the user asks what STORM is, asks to compare STORM with RAG, wants the method explained, or asks how the original paper differs from popular four-prompt adaptations.
 - `references/workflow.md`: Read for any substantial research, outline, report, article, or course-generation task.
 - `references/prompts.md`: Read when generating reusable prompts or running the workflow step by step.
 - `references/source-policy.md`: Read whenever external sources, citations, factual claims, controversial topics, or high-stakes accuracy are involved.
@@ -39,6 +41,7 @@ Read only the files needed for the user request:
 
 - Start with a brief plan for multi-step work: each step should include how it will be verified.
 - Prefer the minimum workflow that satisfies the request. For a quick outline, do not run a full article pipeline.
+- For deep work, define what "deep" means for this task before retrieval: intended decisions, expected treatment, useful evidence mix, localization needs, and length only when it helps scope the deliverable. Do not use word count as a proxy for quality.
 - Do not silently invent sources. Mark unsourced claims as hypotheses or leave them out.
 - Distinguish what sources say from what the agent infers.
 - Preserve minority or conflicting viewpoints when they matter to the topic.
@@ -47,18 +50,23 @@ Read only the files needed for the user request:
 - Do not output secrets, credentials, API keys, or tokens in notes, logs, examples, or generated text.
 - If the user asks for final writing, still produce or validate an outline before drafting unless they explicitly say to skip planning.
 - Treat the refined outline as a structure contract. Do not silently delete, rename, merge, add, or reorder substantive sections while drafting. Update and revalidate the refined outline first when evidence or user direction requires a structural change.
+- Treat research readiness, section evidence, and final quality as semantic gates. Record an explicit `PASS` or `BLOCKED` decision with reasons; do not claim that a word-count, citation-count, or structure script proves depth.
 
 ## Optional Scripts
 
 Resolve optional scripts relative to the directory containing this loaded `SKILL.md`. Do not assume the skill has been installed under a particular home-directory path. If the script or Python is unavailable, skip it and state the limitation instead of executing an empty path. The examples below use `<skill-directory>` as a placeholder and work from source checkouts as well as installed copies.
 
-Use `scripts/outline_lint.py` only when an outline has been saved to a Markdown file and the user wants a quick mechanical check. The script is advisory; human review and source verification remain required.
+Use `scripts/outline_lint.py` only when an outline has been saved to a Markdown file and the user wants a quick mechanical check. The script is advisory; human review, research readiness, section evidence, and source verification remain required.
 
 ```bash
 python3 "<skill-directory>/scripts/outline_lint.py" path/to/outline.md
 ```
 
 Use `scripts/report_structure_lint.py` as a mandatory delivery gate whenever both a refined outline and final Markdown draft exist. It checks that every outline heading appears at the same level and in the same order, rejects unapproved extra sections, and rejects empty leaf sections. A non-zero exit blocks delivery. Standard scaffolding such as Summary and References may be added without appearing in the outline.
+
+For deep final writing, also run the same script against `refined-outline.md` and `section-evidence.md` before drafting. This mechanically confirms that every planned leaf has a packet; the semantic section-evidence decision still requires human or model review.
+
+This script checks structure only. Passing it does not establish research sufficiency, explanatory depth, source diversity, citation entailment, or overall report quality. Complete the semantic gates in `references/workflow.md` as well.
 
 ```bash
 python3 "<skill-directory>/scripts/report_structure_lint.py" \

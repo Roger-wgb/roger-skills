@@ -27,6 +27,8 @@ Avoid when possible:
 - Sources that do not support their claims
 - Pages with obvious promotional or ideological framing unless the task is to analyze that framing
 
+For deep work, assess the source portfolio as a whole as well as each source individually. Seek the mix the claims require: for example primary records for what an organization did, scholarly or technical work for mechanisms and effects, reputable independent analysis for external scrutiny, and local first-party material for jurisdiction-specific conclusions. Do not satisfy "diversity" by adding weak sources, and do not let one interested organization silently define an entire cross-industry conclusion.
+
 ## Claim Discipline
 
 Classify notes as:
@@ -38,6 +40,15 @@ Classify notes as:
 - Gap: important information not yet sourced.
 
 Do not present inferences as sourced facts.
+
+When summarizing overall support, prefer categorical states over numeric confidence scores:
+
+- Verified: directly confirmed by strong source evidence.
+- Supported: evidence exists but is limited in scope, independence, or generalizability.
+- Inference: reasoned from supported facts and labeled as such.
+- Disputed: credible sources materially disagree.
+- Gap: evidence is missing or could not be verified.
+- Downgraded: a claim was weakened after verification.
 
 ## Search Results Are Candidate Sources
 
@@ -67,7 +78,7 @@ Choose sources by authority and relevance, not by what language the user wants t
 - Keep the source title and organization or author name in their original language in the References list (a parenthetical translation is optional).
 - Translate the supporting claim into the output language in the body text.
 - For direct quotations, translate and mark the passage as a translation.
-- When checking paraphrase accuracy (see workflow.md Phase 9), compare the translated claim's meaning against the original-language source, not just the surface wording.
+- When checking paraphrase accuracy (see workflow.md Phase 11), compare the translated claim's meaning against the original-language source, not just the surface wording.
 
 ## Neutrality
 

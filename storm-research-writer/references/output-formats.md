@@ -18,6 +18,13 @@ Use these templates when the user does not provide a required structure.
 ## Goal
 {output goal, audience, scope}
 
+## Depth Contract
+- Intended decisions:
+- Expected treatment:
+- Useful evidence mix:
+- Localization needs:
+- Length constraint, if any:
+
 ## Perspectives
 - {perspective}: {why it matters}
 
@@ -35,6 +42,46 @@ Use these templates when the user does not provide a required structure.
 
 ## Suggested Outline
 {outline}
+```
+
+## Research Readiness
+
+Use this for the semantic gate before locking a deep refined outline. `PASS` means the evidence is ready for the declared scope, not that all possible information has been exhausted.
+
+```markdown
+# Research Readiness: {topic}
+
+## Decision
+{PASS | BLOCKED}
+
+## Core Question Status
+- Question:
+  Status: {verified | supported | inference | disputed | gap | downgraded}
+  Evidence:
+  Remaining issue:
+
+## Perspective Coverage
+- Perspective:
+  Contribution:
+  Sources:
+  Missing or overrepresented:
+
+## Contradiction Map
+- Competing claims:
+  Stronger evidence and why:
+  Resolution status:
+  Follow-up performed:
+
+## Source Portfolio
+- Authority and source-type mix:
+- Interested-source concentration:
+- Localization coverage:
+
+## Blocking Gaps
+- {none, or gap plus required action}
+
+## Stopping Rationale
+{why another focused round is or is not likely to change a core answer or the outline}
 ```
 
 ## Article Outline
@@ -98,6 +145,31 @@ Length targets given by the user refer to body prose (lead + sections), not the 
 - Caveats:
 ```
 
+## Section Evidence Packets
+
+Copy the refined outline's complete heading tree verbatim. Add the following packet under every leaf heading. Keep mechanisms, cases, comparisons, and action implications optional unless they serve the section purpose and reliable evidence exists.
+
+```markdown
+# Section Evidence: {topic}
+
+{copy the refined outline heading tree verbatim}
+
+{under each leaf heading:}
+
+- Purpose:
+- Key questions:
+- Claims and types:
+  - Claim:
+    Type: {fact | interpretation | inference | dispute | gap}
+    Evidence:
+- Material disagreement / uncertainty:
+- Boundary / gap:
+- Depth: {brief | standard | deep}
+- Optional mechanism:
+- Optional case or comparison:
+- Optional implication:
+```
+
 ## Final Report
 
 ```markdown
@@ -143,4 +215,34 @@ Length targets given by the user refer to body prose (lead + sections), not the 
 - Source:
   Concern:
   Replacement or caveat:
+```
+
+## Final Quality Review
+
+Use this semantic gate for deep final writing. A critical failure in any required dimension blocks delivery. Do not infer `PASS` from word count, citation count, or the structure lint result.
+
+```markdown
+# Final Quality Review: {topic}
+
+## Decision
+{PASS | BLOCKED}
+
+## Depth Contract Fit
+- Intended decisions served:
+- Expected treatment delivered:
+- Material shortfall:
+
+## Quality Dimensions
+- Coverage: {PASS | BLOCKED} — {reason}
+- Explanatory depth: {PASS | BLOCKED} — {reason}
+- Grounding and citation entailment: {PASS | BLOCKED} — {reason}
+- Disagreement preservation: {PASS | BLOCKED} — {reason}
+- Organization and proportionality: {PASS | BLOCKED} — {reason}
+- Source quality and neutrality: {PASS | BLOCKED} — {reason}
+- Time-sensitive phrasing: {PASS | BLOCKED} — {reason}
+- Over-association: {PASS | BLOCKED} — {reason}
+- Decision usefulness, when required: {PASS | BLOCKED | N/A} — {reason}
+
+## Required Revisions
+- {none, or concrete revision}
 ```
