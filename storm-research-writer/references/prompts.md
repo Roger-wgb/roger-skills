@@ -122,10 +122,11 @@ Revise the draft outline using the research brief. Requirements:
 Topic: {topic}
 Section heading: {section_heading}
 Section purpose: {section_purpose}
+Locked outline path or heading tree: {refined_outline}
 Relevant source notes:
 {source_notes}
 
-Draft this section in a neutral, informative style. Use only supported claims. Keep citations or source references attached when required. Do not connect facts unless the sources support the connection.
+Draft only the requested section under its exact locked-outline heading. Do not rename it, merge it into another section, introduce a new substantive heading, or omit planned child headings. Use only supported claims. Keep citations or source references attached when required. Do not connect facts unless the sources support the connection. If the notes cannot support the section, write an explicit evidence gap or stop and request an outline revision.
 ```
 
 ## Lead / Summary Synthesis
@@ -148,13 +149,14 @@ Source notes:
 {source_notes}
 
 Review the output for:
-1. Unsupported claims
-2. Over-association between unrelated facts
-3. Source bias or non-neutral tone
-4. Missing major perspectives
-5. Weak organization
-6. Citations that exist but paraphrase the source inaccurately (separate from missing citations)
-7. Undated relative time phrases that will go stale
+1. Structure drift from the refined outline: missing, renamed, merged, added, reordered, level-changed, or empty sections
+2. Unsupported claims
+3. Over-association between unrelated facts
+4. Source bias or non-neutral tone
+5. Missing major perspectives
+6. Weak organization
+7. Citations that exist but paraphrase the source inaccurately (separate from missing citations)
+8. Undated relative time phrases that will go stale
 
 Return actionable fixes, not a general critique.
 ```

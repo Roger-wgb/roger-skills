@@ -1,8 +1,9 @@
 ---
 name: "storm-research-writer"
 description: "Use when an agent needs to perform STORM-inspired research and writing: multi-perspective topic exploration, question-driven research, source-grounded synthesis, outline generation, Wikipedia-like article drafting, research reports, course frameworks, literature-style briefs, or any task where the user asks to research before writing, use STORM, ask questions from multiple perspectives, build an outline from sources, or produce a grounded long-form draft. Do not use for simple rewriting, proofreading, summarization, translation, or short answers that do not require research, sources, or an outline."
-version: "1.0.1"
-author: "roger"
+metadata:
+  version: "1.0.2"
+  author: "roger"
 ---
 
 # Storm Research Writer
@@ -21,8 +22,8 @@ The skill is tool-agnostic. Use whatever reliable sources and tools are availabl
 4. Gather evidence: answer each question from sources and separate facts, interpretations, and inferences.
 5. Synthesize notes: merge overlapping findings and preserve source attribution.
 6. Build an outline: refine the existing background-only draft with the synthesized research notes before drafting.
-7. Draft if requested: write section by section using the outline and source notes, then synthesize the lead/summary last.
-8. Verify: check coverage, unsupported claims, source quality, paraphrase accuracy, time-sensitive phrasing, and over-association.
+7. Draft if requested: lock the refined outline as the structure contract, copy its heading tree into the draft, and fill each section from source notes. Synthesize the lead/summary last.
+8. Verify: block delivery until the final draft passes structure conformance plus coverage, grounding, source quality, paraphrase accuracy, time-sensitive phrasing, and over-association checks.
 
 ## Reference Routing
 
@@ -45,6 +46,7 @@ Read only the files needed for the user request:
 - For legal, policy, medical, financial, safety, or enterprise-governance research, establish the applicable country, region, or jurisdiction before deep retrieval. If it is missing and would change the answer, ask rather than defaulting to the most visible sources.
 - Do not output secrets, credentials, API keys, or tokens in notes, logs, examples, or generated text.
 - If the user asks for final writing, still produce or validate an outline before drafting unless they explicitly say to skip planning.
+- Treat the refined outline as a structure contract. Do not silently delete, rename, merge, add, or reorder substantive sections while drafting. Update and revalidate the refined outline first when evidence or user direction requires a structural change.
 
 ## Optional Scripts
 
@@ -55,6 +57,15 @@ Use `scripts/outline_lint.py` only when an outline has been saved to a Markdown 
 ```bash
 python3 "<skill-directory>/scripts/outline_lint.py" path/to/outline.md
 ```
+
+Use `scripts/report_structure_lint.py` as a mandatory delivery gate whenever both a refined outline and final Markdown draft exist. It checks that every outline heading appears at the same level and in the same order, rejects unapproved extra sections, and rejects empty leaf sections. A non-zero exit blocks delivery. Standard scaffolding such as Summary and References may be added without appearing in the outline.
+
+```bash
+python3 "<skill-directory>/scripts/report_structure_lint.py" \
+  path/to/refined-outline.md path/to/final-report.md
+```
+
+If the script cannot run, perform the same one-to-one heading audit manually and state that the gate was manual. Do not claim that structure conformance passed merely because `outline_lint.py` passed.
 
 Use `scripts/web_search.py` only when the current environment has no native web-search tool and the task genuinely needs external sources. It queries a search API (Brave, Tavily, or SerpAPI) and returns candidate sources as JSON (`title`, `url`, `snippet`, `source`, `published_date`). The API key is read from an environment variable (`BRAVE_SEARCH_API_KEY`, `TAVILY_API_KEY`, or `SERPAPI_API_KEY`) and is never printed. Results are candidate sources only — apply `references/source-policy.md` before treating any snippet as fact.
 

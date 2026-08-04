@@ -146,7 +146,11 @@ Draft only after the outline is adequate or the user explicitly asks to skip out
 
 Rules:
 
-- Write section by section.
+- Lock the refined outline as the structure contract after it passes `outline_lint.py` or an equivalent manual check.
+- Create the final draft by copying the refined outline's complete heading tree verbatim before writing prose. Standard scaffolding headings such as Summary and References may be added; other additions require updating the refined outline first.
+- Build a heading-to-source map so every substantive outline section has supporting notes or an explicit gap before drafting.
+- Write one leaf section at a time. Do not silently delete, rename, merge, add, or reorder substantive headings to improve flow or shorten the output.
+- If evidence cannot support a planned section, keep it and state the gap, or revise and revalidate the refined outline before continuing. Never solve the problem by omitting the section only from the final draft.
 - Use the source notes for claims. For deep runs, pull them from the saved source-notes file rather than re-deriving them from context.
 - Cite or name sources when required.
 - Avoid unsupported connective claims.
@@ -159,6 +163,7 @@ Rules:
 
 Before final delivery, check:
 
+- Structure conformance: Does every refined-outline heading appear verbatim at the same level and in the same order? Are all leaf sections non-empty? Are there unapproved substantive headings?
 - Coverage: Does the outline answer the user's intended scope?
 - Organization: Are sections ordered logically?
 - Grounding: Are important claims backed by notes or citations?
@@ -169,3 +174,5 @@ Before final delivery, check:
 - Gaps: What should be researched next?
 
 For an outline saved as Markdown, optionally run `scripts/outline_lint.py`. It only flags mechanical structure problems (heading-level jumps, duplicate or placeholder headings) and does not judge the two-stage outline process, source grounding, citation quality, or viewpoint balance — a clean lint result does not satisfy the checks above.
+
+When both `refined-outline.md` and the final Markdown draft exist, run `scripts/report_structure_lint.py` before delivery. Exit code 0 is required. If it fails, fix the final draft or intentionally revise and revalidate the outline; do not deliver with a warning. If the script is unavailable, manually create a one-to-one checklist of outline heading, final heading, level, order, and content status. The manual checklist must have no failures before delivery.

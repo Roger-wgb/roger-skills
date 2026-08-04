@@ -106,8 +106,7 @@ Length targets given by the user refer to body prose (lead + sections), not the 
 ## Summary
 {concise overview}
 
-## Main Analysis
-{sectioned body}
+{copy every substantive heading from refined-outline.md verbatim, preserving level and order; fill each leaf section rather than replacing the heading tree with a generic "Main Analysis" section}
 
 ## Evidence Notes
 {important citations or source notes}
@@ -118,6 +117,8 @@ Length targets given by the user refer to body prose (lead + sections), not the 
 ## Further Research
 {next questions}
 ```
+
+`Summary`, `Evidence Notes`, `Limitations`, `Further Research`, and reference sections are standard scaffolding and may be added even when absent from the refined outline. All other substantive headings must come from the locked refined outline unless that outline is revised and revalidated first.
 
 ## Verification Report
 

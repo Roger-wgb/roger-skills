@@ -54,6 +54,18 @@
         "No web_search.py call or other source retrieval is performed, since the task provides its own text and requires no external facts.",
         "No fabricated claims or citations are added to the polished text; the rewrite preserves the original meaning."
       ]
+    },
+    {
+      "id": 6,
+      "prompt": "你已经完成一份关于 FDE 能力路径的精修大纲，包含以下一级章节：角色定位、六维能力模型、五阶段成长路径、每阶段的证明材料、组织如何培养 FDE、评价体系与激励冲突、职业分叉、中国企业落地时的待验证问题。现在基于来源笔记生成最终 Markdown 研究报告，不得省略大纲章节。",
+      "expected_output": "最终报告完整保留精修大纲的标题、层级和顺序，每个叶子章节都有正文或明确证据缺口；标准摘要、参考资料等脚手架章节可以额外出现。交付前运行结构一致性硬闸口，任何章节缺失、改名、合并、重排、层级变化、未批准新增或空叶子章节都会阻断交付。",
+      "expectations": [
+        "The refined outline is treated as a locked structure contract, not as optional planning guidance.",
+        "Every substantive outline heading appears verbatim at the same Markdown level and in the same order in the final report.",
+        "No substantive outline section is silently merged, renamed, omitted, or replaced by a generic Main Analysis section.",
+        "Every leaf section contains prose or an explicit evidence-gap statement.",
+        "scripts/report_structure_lint.py exits 0 before delivery; a non-zero result is fixed rather than merely disclosed."
+      ]
     }
   ]
 }
