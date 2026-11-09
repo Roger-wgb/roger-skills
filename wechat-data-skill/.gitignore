@@ -1,0 +1,11 @@
+# 本机运行环境（首次 selfcheck 自动重建，勿上传）
+.venv/
+
+# Python 缓存
+__pycache__/
+*.py[cod]
+*.egg-info/
+
+# 运行产物（含真实聊天记录，勿上传）
+out/
+*.log

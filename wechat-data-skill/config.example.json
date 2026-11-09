@@ -1,0 +1,6 @@
+{
+  "default_out_dir": "out",
+  "db_dir": "",
+  "fetch_cli": "",
+  "_说明": "本技能自带 wechat-cli（vendor/ + 首次自检自动建的 .venv），所以这套配置基本可留空、无需填任何机器路径。复制本文件为 config.json 即可用。逐项：default_out_dir 默认输出目录（相对本技能目录或用绝对路径）；db_dir 仅用于 init --force 的补救提示，留空会自动探测 ~/xwechat_files/*/db_storage；fetch_cli 仅在特殊情况下想改用系统里的别的 wechat-cli 时填（优先级：--cli 参数 > 技能自带 .venv > WECHAT_CLI > 本项 > PATH）。"
+}

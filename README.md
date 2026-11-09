@@ -37,6 +37,14 @@
 
 适用于产业研究、技术趋势、企业战略、文献式综述和需要“先研究、再写作”的复杂主题；不适用于简单改写、翻译或无需来源的短回答。
 
+### [wechat-data-skill](./wechat-data-skill)
+抓取本机微信聊天记录（个人单聊 / 群聊均支持），输出原始记录、HTML 报告、时间段总结或自定义内容。
+
+- **开箱即用**：自带 wechat-cli 源码与依赖 wheel（`vendor/`），首次自检自动建 `.venv`；本机前置只需 Python 3.10+ 和已登录的微信
+- **四种输出**：原始记录 / HTML 报告 / 时间段总结 / 自定义格式
+- **Agent 无关**：Claude Code、Cursor 等支持 skills 目录的 Agent 均可用
+- **隐私边界**：运行时产物（`out/`）与 `.venv/` 已 gitignore，仓库中不含任何真实聊天记录
+
 ## 使用
 
 把某个 skill 目录放进 `~/.claude/skills/`（或 `~/.agents/skills/`）即可被 Claude Code 识别。

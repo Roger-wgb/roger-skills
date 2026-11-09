@@ -1,0 +1,4 @@
+{
+  "default_out_dir": "out",
+  "_说明": "本技能自带 wechat-cli（vendor/ 自动装），无需填机器路径。default_out_dir 默认输出目录。需要时可按 config.example.json 追加 db_dir / fetch_cli。"
+}
